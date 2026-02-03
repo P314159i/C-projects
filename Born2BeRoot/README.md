@@ -208,13 +208,9 @@ A bash script (`/etc/cron.d/monitoring.sh`) displays system information every 10
 
 ## Resources
 
-main debian howto and installation and info:
-		[https://www.debian.org/releases/trixie/amd64/install.en.pdf]
+main debian howto and installation and info: [https://www.debian.org/releases/trixie/amd64/install.en.pdf]
 
-users, groups:  [https://www.debian.org/releases/stable/arm64/apds03.en.html#id5325]
-	       		[https://phoenixnap.com/kb/how-to-list-users-linux]
-				[https://www.baeldung.com/linux/list-all-groups]
-				[https://linuxopsys.com/adduser-command-in-linux]
-				[https://www.howtouselinux.com/post/list-all-groups-linux]
+users, groups:[https://www.debian.org/releases/stable/arm64/apds03.en.html#id5325],[https://phoenixnap.com/kb/how-to-list-users-linux],[https://www.baeldung.com/linux/list-all-groups],[https://linuxopsys.com/adduser-command-in-linux],[https://www.howtouselinux.com/post/list-all-groups-linux],
+				
 monitoring.sh:	[AI !!]
 		
