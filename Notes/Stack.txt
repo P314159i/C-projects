@@ -1,0 +1,194 @@
+
+_________________________________
+
+Stack with Mallloc
+_________________________________
+ A dynamically resizing integer stack, pushes three values onto it, prints them while popping them off, and then frees the stack.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Stack {
+    int count;      // number of elements
+    int capacity;   // allocated size of data[]
+    int *data;      // array of ints
+} Stack;
+
+Stack *create_stack(int initial_capacity) {
+    if (initial_capacity <= 0) initial_capacity = 1;
+
+    Stack *stack = malloc(sizeof(Stack));
+    if (!stack) return NULL;
+
+    stack->data = malloc(initial_capacity * sizeof(int));
+    if (!stack->data) {
+        free(stack);
+        return NULL;
+    }
+
+    stack->count    = 0;
+    stack->capacity = initial_capacity;
+    return stack;
+}
+
+void destroy_stack(Stack *stack) {
+    if (!stack) return;
+    free(stack->data);
+    free(stack);
+}
+
+int stack_is_empty(const Stack *stack) {
+    return !stack || stack->count == 0;
+}
+
+int stack_push(Stack *stack, int value) {
+    if (!stack) return -1;
+
+    if (stack->count == stack->capacity) {
+        int new_capacity = stack->capacity * 2;
+        int *tmp = realloc(stack->data, new_capacity * sizeof(int));
+        if (!tmp) return -1;           // keep old data on failure
+        stack->data     = tmp;
+        stack->capacity = new_capacity;
+    }
+
+    stack->data[stack->count++] = value;
+    return 0;
+}
+
+int stack_pop(Stack *stack, int *out_value) {
+    if (!stack || stack->count == 0) return -1;
+    stack->count--;
+    if (out_value) *out_value = stack->data[stack->count];
+    return 0;
+}
+
+int stack_peek(const Stack *stack, int *out_value) {
+    if (!stack || stack->count == 0) return -1;
+    if (out_value) *out_value = stack->data[stack->count - 1];
+    return 0;
+}
+
+/* Example usage
+int main(void) {
+    Stack *s = create_stack(2);
+    if (!s) {
+        fprintf(stderr, "failed to create stack\n");
+        return 1;
+    }
+
+    stack_push(s, 10);
+    stack_push(s, 20);
+    stack_push(s, 30);  // triggers realloc
+
+    int x;
+    while (!stack_is_empty(s)) {
+        stack_pop(s, &x);
+        printf("%d\n", x);
+    }
+
+    destroy_stack(s);
+    return 0;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+_________________________________
+
+Stack with Array
+_________________________________
+
+#include "push_swap.h"
+#include <stdio.h>
+
+#define MAX 100
+
+typedef struct {
+    int data[MAX];
+    int top;      // index of top element, -1 when empty
+} stack;
+
+void stack_init(stack *s) {
+    s->top = -1;
+}
+
+int stack_is_empty(const stack *s) {
+    return s->top == -1;
+}
+
+int stack_is_full(const stack *s) {
+    return s->top == MAX - 1;
+}
+
+int stack_push(stack *s, int value) {
+    if (stack_is_full(s))
+        return -1;                 // overflow
+    s->data[++s->top] = value;
+    return 0;
+}
+
+int stack_pop(stack *s, int *out_value) {
+    if (stack_is_empty(s))
+        return -1;                 // underflow
+    if (out_value)
+        *out_value = s->data[s->top];
+    s->top--;
+    return 0;
+}
+
+int stack_peek(const stack *s, int *out_value) {
+    if (stack_is_empty(s))
+        return -1;
+    if (out_value)
+        *out_value = s->data[s->top];
+    return 0;
+}
+
+// swap the top two elements of stack a (like your sa)
+void sa(stack *a) {
+    int tmp;
+
+    if (a->top < 1)
+        return;
+    tmp = a->data[a->top];
+    a->data[a->top] = a->data[a->top - 1];
+    a->data[a->top - 1] = tmp;
+}
+
+int main(int argc, char **argv) {
+    stack a;
+    int i;
+
+    stack_init(&a);
+
+    printf("have %d args:\n", argc);
+
+    // push all numeric args (if any) onto stack a
+    for (i = 1; i < argc && !stack_is_full(&a); i++) {
+        int value = atoi(argv[i]);
+        if (stack_push(&a, value) != 0) {
+            fprintf(stderr, "stack overflow while pushing %s\n", argv[i]);
+            break;
+        }
+    }
+
+    // simple demo: pop and print all elements
+    printf("stack contents (top to bottom):\n");
+    while (!stack_is_empty(&a)) {
+        int x;
+        stack_pop(&a, &x);
+        printf("%d\n", x);
+    }
+
+    return 0;
+}
