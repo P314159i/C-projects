@@ -27,4 +27,4 @@ This implementation uses utility functions from the 42 Libft library (for exampl
 
 ## Instructions
 
-- Run `make` to compile the library and generate `libftprintf.a`.
+- Run `make` to compile the library and generate `libftprintf.a`. 

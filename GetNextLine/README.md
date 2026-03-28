@@ -48,4 +48,4 @@ Linux manuals: https://man7.org/linux/man-pages/ (read, open, close, malloc, fre
 
 Libft functions
 
-## End!
+## End! 
