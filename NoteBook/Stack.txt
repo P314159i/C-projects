@@ -3,7 +3,7 @@ _________________________________
 
 Stack with Mallloc
 _________________________________
- A dynamically resizing integer stack, pushes three values onto it, prints them while popping them off, and then frees the stack.
+>> A dynamically resizing integer stack, pushes three values onto it, prints them while popping them off, and then frees the stack.
 
 #include <stdio.h>
 #include <stdlib.h>
