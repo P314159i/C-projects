@@ -6,7 +6,7 @@
 /*   By: pidi <pidi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 18:41:31 by pidi              #+#    #+#             */
-/*   Updated: 2026/03/27 19:34:23 by pidi             ###   ########.fr       */
+/*   Updated: 2026/03/28 14:18:58 by pidi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,8 @@ stack createstack(void)
 	a.top = -1;
 	return a;
 }
-// void sa (stack *a)
-// {
-// 	int tmp;
-// 	if (a -> top < 1)
-// 		return ;
-// 	tmp = a -> data[a -> top];
-// 	a -> data[a -> top] = a -> data [a -> top - 1];
-// 	a -> data [a -> top - 1] = tmp;
-// }
+
+
 
 int main(int argc, char**argv)
 {
