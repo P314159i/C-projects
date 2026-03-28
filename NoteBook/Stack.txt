@@ -1,4 +1,4 @@
-
+**Stack struct's instance needs to be defined in main(). any local variable inside a function gets destroyed once a functoin ends, so we need to keep our stack inside the funciton that starts and finished the program, to keep the local variable going during the run time.
 _________________________________
 
 Stack with Mallloc
@@ -183,6 +183,102 @@ int main(int argc, char **argv) {
     }
 
     // simple demo: pop and print all elements
+    printf("stack contents (top to bottom):\n");
+    while (!stack_is_empty(&a)) {
+        int x;
+        stack_pop(&a, &x);
+        printf("%d\n", x);
+    }
+
+    return 0;
+}
+
+
+
+_________________________________
+
+Stack with linked List
+_________________________________
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+    int value;
+    struct node *next;
+} node;
+
+typedef struct {
+    node *top;   // points to top node, makes a bridge to avoid double pointer (pointer to struct stack and then ot struct node
+} stack;
+
+void stack_init(stack *s) {
+    s->top = NULL;
+}
+
+int stack_is_empty(const stack *s) {
+    return s->top == NULL;
+}
+
+int stack_push(stack *s, int value) {
+    node *new = malloc(sizeof(node));
+    if (!new)
+        return -1;
+
+    new->value = value;
+    new->next = s->top;
+    s->top = new;
+    return 0;
+}
+
+int stack_pop(stack *s, int *out_value) {
+    if (stack_is_empty(s))
+        return -1;
+
+    node *tmp = s->top;
+
+    if (out_value)
+        *out_value = tmp->value;
+
+    s->top = tmp->next;
+    free(tmp);
+    return 0;
+}
+
+int stack_peek(const stack *s, int *out_value) {
+    if (stack_is_empty(s))
+        return -1;
+
+    if (out_value)
+        *out_value = s->top->value;
+
+    return 0;
+}
+
+// swap top two (sa)
+void sa(stack *a) {
+    if (!a->top || !a->top->next)
+        return;
+
+    node *first = a->top;
+    node *second = first->next;
+
+    first->next = second->next;
+    second->next = first;
+    a->top = second;
+}
+
+int main(int argc, char **argv) {
+    stack a;
+    int i;
+
+    stack_init(&a);
+
+    for (i = 1; i < argc; i++) {
+        int value = atoi(argv[i]);
+        stack_push(&a, value);
+    }
+
     printf("stack contents (top to bottom):\n");
     while (!stack_is_empty(&a)) {
         int x;
