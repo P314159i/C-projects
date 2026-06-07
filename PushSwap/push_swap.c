@@ -6,34 +6,18 @@
 /*   By: pidi <pidi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 18:41:31 by pidi              #+#    #+#             */
-/*   Updated: 2026/03/28 14:30:53 by pidi             ###   ########.fr       */
+/*   Updated: 2026/06/07 20:56:53 by pidi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-typedef struct {
-	int data[MAX];
-	int top;
-} stack;
-
-int	ft_isdigit(int c)
+struct node
 {
-	if (c >= '0' && c <= '9')
-		return (2048);
-	return (0);
-}
+	int		value;
+	struct	node* next;
+};
 
-
-stack createstack(void)
-{
-	stack a;
-	stack b;
-
-	b.top = -1;
-	a.top = -1;
-	return a;
-}
 
 int	valid_input(char *str)
 {
@@ -84,22 +68,33 @@ int	ft_atoi(const char *nptr, int *error)
 
 int	main(int argc, char **argv)
 {
-	int	i;
-	int	n;
-	int	error;
+	int				i;
+	int				error;
+	struct node		*head;
+	struct node		*last;
+	struct node		*new;
 
-	if (argc < 2)
-		return (printf("please enter 2 or more numbers\n"), 1);
+	head = NULL;
+	last = NULL;
 	i = 1;
 	while (i < argc)
 	{
 		if (!valid_input(argv[i]))
 			return (printf("Error\n"), 1);
-		n = ft_atoi(argv[i], &error);
+
+		new = malloc(sizeof(struct node));
+		new->value = ft_atoi(argv[i], &error);
+		new->next = NULL;
+
 		if (error)
 			return (printf("Error\n"), 1);
+
+		if (head == NULL)
+			head = new;
+		else
+			last->next = new;
+
+		last = new;
 		i++;
 	}
-	printf("%d\n", n);
 	return (0);
-}
